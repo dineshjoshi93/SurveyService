@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Survey</title>
+    <style>
+        th, td {
+            border-collapse: collapse;
+            border: none;
+        }
+        table {
+            margin-left: auto;
+            margin-right: auto;
+            border-collapse: collapse;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+<form action="#" th:action="@{/survey/{id}(id=${surveyData.surveyUserId})}" method="post" th:object="${surveyData}">
+    <table>
+        <tr>
+            <th colspan="4">
+                <h1>Survey By XYZ</h1>
+            </th>
+        </tr>
+        <tbody th:each="section, itrsec : ${surveyData.surveySections}" >
+        <tr style="outline: thin solid">
+            <th colspan="4"><h3>Section #<span th:text="${itrsec.index + 1}"></span>: <span th:text="${section.getDescription()}"></span></h3></th>
+            <input type="hidden" th:field="*{surveySections[__${itrsec.index}__].description}" />
+            <input type="hidden" th:field="*{surveySections[__${itrsec.index}__].id}" />
+        </tr>
+
+        <tr style="outline: thin solid" th:each="question, itrq: ${section.getSurveyQuestions()}">
+            <td th:text="${question.text}"></td>
+            <td><input type="radio" value="Dissatisfied" th:id="'Option1-' + ${question.id}" th:field="*{surveySections[__${itrsec.index}__].surveyQuestions[__${itrq.index}__].answer}">
+                <label th:for="'Option1-' + ${question.id}">Dissatisfied</label></td>
+            <td><input type="radio" value="Neutral" th:id="'Option2-' + ${question.id}" th:field="*{surveySections[__${itrsec.index}__].surveyQuestions[__${itrq.index}__].answer}">
+                <label th:for="'Option2-' + ${question.id}">Neutral</label></td>
+            <td><input type="radio" value="Satisfied" th:id="'Option3-' + ${question.id}" th:field="*{surveySections[__${itrsec.index}__].surveyQuestions[__${itrq.index}__].answer}">
+                <label th:for="'Option3-' + ${question.id}">Satisfied</label></td>
+            <input type="hidden" th:field="*{surveySections[__${itrsec.index}__].surveyQuestions[__${itrq.index}__].id}" />
+            <input type="hidden" th:field="*{surveySections[__${itrsec.index}__].surveyQuestions[__${itrq.index}__].text}" />
+        </tr>
+        </tbody>
+
+        <tr>
+            <td colspan="2"><input type="submit" value="Submit"></td>
+            <td colspan="2"><input type="reset" value="Reset"></td>
+        </tr>
+    </table>
+    <input type="hidden" th:field="*{id}" >
+    <input type="hidden" th:field="*{surveyUserId}" >
+</form>
+
+</body>

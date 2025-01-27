@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Thank You</title>
+    <style>
+        th, td {
+            border-collapse: collapse;
+            border: none;
+        }
+        table {
+            margin-left: auto;
+            margin-right: auto;
+            border-collapse: collapse;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <tr>
+        <th colspan="2"><h2>Thank you <span style="color: #ff0000" th:text="${surveyUser.name}"></span> for taking the Survey...</h2></th>
+    </tr>
+    <tr>
+        <th colspan="2"><h3>Your Score is <span style="color: #00ff00" th:text="${score}"></span> !!</h3></th>
+    </tr>
+    <tr>
+    <th><a href="/survey-user">Submit another survey</a><th>
+    </tr>
+    <tr>
+        <td colspan="2"><h4>You have provided following answers</h4></td>
+    </tr>
+    <tbody th:each="section, itrs: ${surveyData.surveySections}">
+        <tr style="outline: thin solid">
+            <td colspan="2"><h5>Section #<span th:text="${itrs.index + 1}"></span>:<span th:text="${section.description}"></span></h5></td>
+        </tr>
+        <tr  style="outline: thin solid" th:each="question : ${section.surveyQuestions}">
+            <td th:text="${question.text}"></td>
+            <td th:text="${question.answer}"></td>
+        </tr>
+    </tbody>
+
+</table>
+</body>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>User</title>
+    <style>
+        th, td {
+            border-collapse: collapse;
+            border: none;
+        }
+        table {
+            margin-left: auto;
+            margin-right: auto;
+            border-collapse: collapse;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+<form action="#" th:action="@{/survey-user}" method="post" th:object="${surveyUser}">
+<table>
+    <tr>
+        <th colspan="2"><h1>User Detail</h1></th>
+    </tr>
+    <tr>
+        <td>Name</td>
+        <td><input type="text" th:field="*{name}" /></td>
+    </tr>
+    <tr>
+        <td>Year Of Birth</td>
+        <td><input type="text" th:field="*{birthYear}" /></td>
+    </tr>
+    <tr>
+        <td>Pin-Code</td>
+        <td><input type="text" th:field="*{pincode}" /></td>
+    </tr>
+
+    <tr>
+        <td ><input type="submit" value="Submit" /></td>
+        <td ><input type="reset" value="Reset" /></td>
+    </tr>
+</table>
+</form>
+
+</body>
