@@ -56,9 +56,9 @@ public class SurveyServiceController {
         surveyData.setId(UUID.randomUUID().toString());
         surveyData.setSurveyUserId(surveyUserId);
         surveyData.setSurveySections(List.of(
-                buildSurveySection("Personal Information", "s1"),
-                buildSurveySection("Past History", "s2"),
-                buildSurveySection("Other Information", "s3")));
+                buildSurveySectionGeneralHealthStatus(),
+                buildSurveySectionLifestyleHabits(),
+                buildSurveySectionMedicalHistory()));
         model.addAttribute("surveyData", surveyData);
         return "survey";
     }
@@ -106,6 +106,8 @@ public class SurveyServiceController {
             return 20;
         } else if ("Satisfied".equals(answer)) {
             return 30;
+        } else if ("VerySatisfied".equals(answer)) {
+            return 60;
         }
         return 0;
     }
@@ -121,19 +123,77 @@ public class SurveyServiceController {
         return String.valueOf(hashCode);
     }
 
-    private SurveySection buildSurveySection(String description, String sectionId) {
+    private SurveySection buildSurveySectionLifestyleHabits() {
+        String sectionId = "s2";
+        String description = "Lifestyle Habits";
         SurveyQuestion surveyQuestion = new SurveyQuestion();
         surveyQuestion.setId(sectionId + "-q1");
-        surveyQuestion.setText("How was your experience?");
+        surveyQuestion.setText("How many servings of fruits and vegetables do you eat daily?");
 
         SurveyQuestion surveyQuestion2 = new SurveyQuestion();
         surveyQuestion2.setId(sectionId + "-q2");
-        surveyQuestion2.setText("How was your experience?");
+        surveyQuestion2.setText("Do you regularly engage in physical activity?");
+
+        SurveyQuestion surveyQuestion3 = new SurveyQuestion();
+        surveyQuestion3.setId(sectionId + "-q3");
+        surveyQuestion3.setText("How many alcoholic drinks do you consume per week?");
+
+        SurveyQuestion surveyQuestion4 = new SurveyQuestion();
+        surveyQuestion4.setId(sectionId + "-q4");
+        surveyQuestion4.setText("How many hours of sleep do you typically get per night?");
 
         SurveySection surveySection = new SurveySection();
         surveySection.setDescription(description);
         surveySection.setId(sectionId);
-        surveySection.setSurveyQuestions(List.of(surveyQuestion, surveyQuestion2));
+        surveySection.setSurveyQuestions(List.of(surveyQuestion, surveyQuestion2, surveyQuestion3, surveyQuestion4));
+        return surveySection;
+    }
+
+    private SurveySection buildSurveySectionMedicalHistory() {
+        String sectionId = "s3";
+        String description = "Medical History";
+        SurveyQuestion surveyQuestion = new SurveyQuestion();
+        surveyQuestion.setId(sectionId + "-q1");
+        surveyQuestion.setText("Do you have any current medical conditions?");
+
+        SurveyQuestion surveyQuestion2 = new SurveyQuestion();
+        surveyQuestion2.setId(sectionId + "-q2");
+        surveyQuestion2.setText("Have you ever been diagnosed with [specific condition]?");
+
+        SurveyQuestion surveyQuestion3 = new SurveyQuestion();
+        surveyQuestion3.setId(sectionId + "-q3");
+        surveyQuestion3.setText("Does anyone in your family have a history of [specific condition]?");
+
+        SurveyQuestion surveyQuestion4 = new SurveyQuestion();
+        surveyQuestion4.setId(sectionId + "-q4");
+        surveyQuestion4.setText("Are you currently taking any medications?");
+
+        SurveySection surveySection = new SurveySection();
+        surveySection.setDescription(description);
+        surveySection.setId(sectionId);
+        surveySection.setSurveyQuestions(List.of(surveyQuestion, surveyQuestion2, surveyQuestion3, surveyQuestion4));
+        return surveySection;
+    }
+
+    private SurveySection buildSurveySectionGeneralHealthStatus() {
+        String sectionId = "s1";
+        String description = "Health Status";
+        SurveyQuestion surveyQuestion = new SurveyQuestion();
+        surveyQuestion.setId(sectionId + "-q1");
+        surveyQuestion.setText("How healthy do you consider yourself to be?");
+
+        SurveyQuestion surveyQuestion2 = new SurveyQuestion();
+        surveyQuestion2.setId(sectionId + "-q2");
+        surveyQuestion2.setText("Have you experienced any major health issues in the past year?");
+
+        SurveyQuestion surveyQuestion3 = new SurveyQuestion();
+        surveyQuestion3.setId(sectionId + "-q3");
+        surveyQuestion3.setText("How often do you visit a doctor for routine checkups?");
+
+        SurveySection surveySection = new SurveySection();
+        surveySection.setDescription(description);
+        surveySection.setId(sectionId);
+        surveySection.setSurveyQuestions(List.of(surveyQuestion, surveyQuestion2, surveyQuestion3));
         return surveySection;
     }
 }
