@@ -37,7 +37,8 @@ public class SurveyServiceController {
 
     @PostMapping("/survey-user")
     public String addSurveyUser(@ModelAttribute SurveyUser surveyUser, Model model) {
-        final String surveyUserId = generateSurveyUserId(surveyUser.getName(), surveyUser.getBirthYear(), surveyUser.getPincode());
+        System.out.println("SURVEY USER " + surveyUser.toString());
+        final String surveyUserId = generateSurveyUserId(surveyUser.getFname(), surveyUser.getLname(), surveyUser.getBirthYear(), surveyUser.getPincode());
         surveyUser.setId(surveyUserId);
 
         SurveyUserTable surveyUserTable = new SurveyUserTable();
@@ -109,9 +110,14 @@ public class SurveyServiceController {
         return 0;
     }
 
-    private String generateSurveyUserId(@NonNull String name, @NonNull String birthYear, @NonNull String pincode) {
+    private String generateSurveyUserId(@NonNull String fname, @NonNull String lname, @NonNull String birthYear, @NonNull String pincode) {
         StringBuilder stringBuilder = new StringBuilder();
-        int hashCode = stringBuilder.append(name.toLowerCase()).append(birthYear.toLowerCase()).append(pincode.toLowerCase()).toString().hashCode();
+        int hashCode = stringBuilder
+                .append(fname.toLowerCase())
+                .append(lname.toLowerCase())
+                .append(birthYear.toLowerCase())
+                .append(pincode.toLowerCase())
+                .toString().hashCode();
         return String.valueOf(hashCode);
     }
 
