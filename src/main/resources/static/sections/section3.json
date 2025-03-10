@@ -1,0 +1,22 @@
+{
+  "description": "Practices To Prevent UTI",
+  "id": "s3",
+  "surveyQuestions": [
+    {
+      "id": "s3-q1",
+      "text": "Perineal wash by:",
+      "inputDetail": {
+        "type": "radio",
+        "values": ["Use of soap and water", "Use of commercial product with tea tree oil", "Plain water"]
+      }
+    },
+    {
+      "id": "s3-q2",
+      "text": "Frequency of perineal wash during menstruation?",
+      "inputDetail": {
+        "type": "radio",
+        "values": ["3-6 times/day", "7-10 times/day"]
+      }
+    }
+  ]
+}

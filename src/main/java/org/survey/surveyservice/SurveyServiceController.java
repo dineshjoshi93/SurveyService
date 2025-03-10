@@ -2,6 +2,7 @@ package org.survey.surveyservice;
 
 import io.awspring.cloud.dynamodb.DynamoDbTemplate;
 import lombok.NonNull;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,18 +16,21 @@ import org.survey.surveyservice.models.SurveyData;
 import org.survey.surveyservice.models.SurveyQuestion;
 import org.survey.surveyservice.models.SurveySection;
 import org.survey.surveyservice.models.SurveyUser;
+import org.survey.surveyservice.utils.ResourceLoaderHelper;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
-import software.amazon.awssdk.services.dynamodb.endpoints.internal.Value;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
+@Log4j2
 @Controller
 public class SurveyServiceController {
 
     @Autowired
     private DynamoDbTemplate dynamoDbTemplate;
+
+    @Autowired
+    private ResourceLoaderHelper resourceLoaderHelper;
 
     @GetMapping("/survey-user")
     public String getSurveyUserForm(Model model) {
@@ -55,10 +59,7 @@ public class SurveyServiceController {
         SurveyData surveyData = new SurveyData();
         surveyData.setId(UUID.randomUUID().toString());
         surveyData.setSurveyUserId(surveyUserId);
-        surveyData.setSurveySections(List.of(
-                buildSurveySectionGeneralHealthStatus(),
-                buildSurveySectionLifestyleHabits(),
-                buildSurveySectionMedicalHistory()));
+        surveyData.setSurveySections(resourceLoaderHelper.loadSurveyDataFromFile());
         model.addAttribute("surveyData", surveyData);
         return "survey";
     }
@@ -121,79 +122,5 @@ public class SurveyServiceController {
                 .append(pincode.toLowerCase())
                 .toString().hashCode();
         return String.valueOf(hashCode);
-    }
-
-    private SurveySection buildSurveySectionLifestyleHabits() {
-        String sectionId = "s2";
-        String description = "Lifestyle Habits";
-        SurveyQuestion surveyQuestion = new SurveyQuestion();
-        surveyQuestion.setId(sectionId + "-q1");
-        surveyQuestion.setText("How many servings of fruits and vegetables do you eat daily?");
-
-        SurveyQuestion surveyQuestion2 = new SurveyQuestion();
-        surveyQuestion2.setId(sectionId + "-q2");
-        surveyQuestion2.setText("Do you regularly engage in physical activity?");
-
-        SurveyQuestion surveyQuestion3 = new SurveyQuestion();
-        surveyQuestion3.setId(sectionId + "-q3");
-        surveyQuestion3.setText("How many alcoholic drinks do you consume per week?");
-
-        SurveyQuestion surveyQuestion4 = new SurveyQuestion();
-        surveyQuestion4.setId(sectionId + "-q4");
-        surveyQuestion4.setText("How many hours of sleep do you typically get per night?");
-
-        SurveySection surveySection = new SurveySection();
-        surveySection.setDescription(description);
-        surveySection.setId(sectionId);
-        surveySection.setSurveyQuestions(List.of(surveyQuestion, surveyQuestion2, surveyQuestion3, surveyQuestion4));
-        return surveySection;
-    }
-
-    private SurveySection buildSurveySectionMedicalHistory() {
-        String sectionId = "s3";
-        String description = "Medical History";
-        SurveyQuestion surveyQuestion = new SurveyQuestion();
-        surveyQuestion.setId(sectionId + "-q1");
-        surveyQuestion.setText("Do you have any current medical conditions?");
-
-        SurveyQuestion surveyQuestion2 = new SurveyQuestion();
-        surveyQuestion2.setId(sectionId + "-q2");
-        surveyQuestion2.setText("Have you ever been diagnosed with [specific condition]?");
-
-        SurveyQuestion surveyQuestion3 = new SurveyQuestion();
-        surveyQuestion3.setId(sectionId + "-q3");
-        surveyQuestion3.setText("Does anyone in your family have a history of [specific condition]?");
-
-        SurveyQuestion surveyQuestion4 = new SurveyQuestion();
-        surveyQuestion4.setId(sectionId + "-q4");
-        surveyQuestion4.setText("Are you currently taking any medications?");
-
-        SurveySection surveySection = new SurveySection();
-        surveySection.setDescription(description);
-        surveySection.setId(sectionId);
-        surveySection.setSurveyQuestions(List.of(surveyQuestion, surveyQuestion2, surveyQuestion3, surveyQuestion4));
-        return surveySection;
-    }
-
-    private SurveySection buildSurveySectionGeneralHealthStatus() {
-        String sectionId = "s1";
-        String description = "Health Status";
-        SurveyQuestion surveyQuestion = new SurveyQuestion();
-        surveyQuestion.setId(sectionId + "-q1");
-        surveyQuestion.setText("How healthy do you consider yourself to be?");
-
-        SurveyQuestion surveyQuestion2 = new SurveyQuestion();
-        surveyQuestion2.setId(sectionId + "-q2");
-        surveyQuestion2.setText("Have you experienced any major health issues in the past year?");
-
-        SurveyQuestion surveyQuestion3 = new SurveyQuestion();
-        surveyQuestion3.setId(sectionId + "-q3");
-        surveyQuestion3.setText("How often do you visit a doctor for routine checkups?");
-
-        SurveySection surveySection = new SurveySection();
-        surveySection.setDescription(description);
-        surveySection.setId(sectionId);
-        surveySection.setSurveyQuestions(List.of(surveyQuestion, surveyQuestion2, surveyQuestion3));
-        return surveySection;
     }
 }

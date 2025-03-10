@@ -1,0 +1,38 @@
+{
+  "description": "Knowledge About UTI",
+  "id": "s2",
+  "surveyQuestions": [
+    {
+      "id": "s2-q1",
+      "text": "Do you know what UTI is?",
+      "inputDetail": {
+        "type": "radio",
+        "values": ["Yes", "No"]
+      }
+    },
+    {
+      "id": "s2-q2",
+      "text": "Source of knowledge?",
+      "inputDetail": {
+        "type": "radio",
+        "values": ["Close Relatives", "General Practitioners", "Medical Specialists", "Books", "Internet", "Others"]
+      }
+    },
+    {
+      "id": "s2-q3",
+      "text": "Urinary tract infection is?",
+      "inputDetail": {
+        "type": "radio",
+        "values": ["Inflammation of Urethra", "Inflammation of Bladder", "Can be all of the above", "None of the above"]
+      }
+    },
+    {
+      "id": "s2-q4",
+      "text": "Common causative factor for UTI?",
+      "inputDetail": {
+        "type": "radio",
+        "values": ["Bacteria", "Virus", "Fungi", "Protozoa", "Hygiene", "Not Sure"]
+      }
+    }
+  ]
+}

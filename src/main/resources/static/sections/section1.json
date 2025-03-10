@@ -1,0 +1,52 @@
+{
+  "description": "High Risk Group Identification",
+  "id": "s1",
+  "surveyQuestions": [
+    {
+      "id": "s1-q1",
+      "text": "History of UTI in past?",
+      "inputDetail": {
+        "type": "radio",
+        "values": ["Yes", "No"]
+      }
+    },
+    {
+      "id": "s1-q2",
+      "text": "Frequency of UTI episodes in past 6 months?",
+      "inputDetail": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "s1-q3",
+      "text": "Duration of previous UTI symptoms?",
+      "inputDetail": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "s1-q4",
+      "text": "Duration of previous UTI symptoms?",
+      "inputDetail": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "s1-q5",
+      "text": "Treatment taken for previous UTI?",
+      "inputDetail": {
+        "type": "radio",
+        "values": ["Yes", "No"]
+      }
+    }
+  ,
+    {
+      "id": "s1-q6",
+      "text": "Completion of Antibiotic course during previous episode?",
+      "inputDetail": {
+        "type": "radio",
+        "values": ["Yes", "No"]
+      }
+    }
+  ]
+}
